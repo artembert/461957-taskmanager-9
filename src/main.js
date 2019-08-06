@@ -4,6 +4,16 @@ const renderComponent = (container, markup) => {
   container.insertAdjacentHTML(`beforeend`, markup);
 };
 
+const getByIdFn = (selector) => document.getElementById(selector);
+
+const findElement = (selector, searchFunction = getByIdFn) => {
+  const element = searchFunction(selector);
+  if (!element) {
+    throw new Error(`Element \`${element}\` did not found`);
+  }
+  return element;
+};
+
 const renderPage = () => {
   const controlTemplate = `<section class="control__btn-wrap">
   <input
@@ -454,16 +464,16 @@ const renderPage = () => {
   </form>
 </article>`;
 
-  const main = document.getElementById(`main`);
-  const controlWrapper = document.getElementById(`control`);
+  const main = findElement(`main`);
+  const controlWrapper = findElement(`control`);
 
   renderComponent(controlWrapper, controlTemplate);
   renderComponent(main, searchTemplate);
   renderComponent(main, filterTemplate);
   renderComponent(main, boardTemplate);
-  const board = document.getElementById(`board`);
+  const board = findElement(`board`);
   renderComponent(board, loadMoreTemplate);
-  const boardTasks = document.getElementById(`board-tasks`);
+  const boardTasks = findElement(`board-tasks`);
   renderComponent(boardTasks, editTaskTemplate);
   for (let i = 0; i < 3; i++) {
     renderComponent(boardTasks, taskTemplate);
