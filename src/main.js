@@ -10,17 +10,27 @@ const render = (markup, container, place = `beforeend`) => {
   container.insertAdjacentHTML(place, markup);
 };
 
+const getByIdFn = (selector) => document.getElementById(selector);
+
+const findElement = (selector, searchFunction = getByIdFn) => {
+  const element = searchFunction(selector);
+  if (!element) {
+    throw new Error(`Element \`${selector}\` did not found`);
+  }
+  return element;
+};
+
 const renderPage = () => {
-  const siteMainElement = document.getElementById(`main`);
-  const siteHeaderElement = document.getElementById(`control`);
+  const siteMainElement = findElement(`main`);
+  const siteHeaderElement = findElement(`control`);
 
   render(createSiteMenuTemplate(), siteHeaderElement);
   render(createSearchTemplate(), siteMainElement);
   render(createFilterTemplate(), siteMainElement);
   render(createBoardTemplate(), siteMainElement);
 
-  const boardElement = document.getElementById(`board`);
-  const taskListElement = document.getElementById(`board-tasks`);
+  const boardElement = findElement(`board`);
+  const taskListElement = findElement(`board-tasks`);
 
   render(createLoadMoreButtonTemplate(), boardElement);
   render(createTaskEditTemplate(), taskListElement);
