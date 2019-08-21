@@ -25,7 +25,7 @@ const getTask = () => ({
 });
 
 export const tasksData = [];
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 19; i++) {
   tasksData.push(getTask());
 }
 
