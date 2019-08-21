@@ -35,8 +35,8 @@ const renderPage = () => {
   const taskListElement = findElement(`board-tasks`);
 
   render(createLoadMoreButtonTemplate(), boardElement);
-  render(createTaskEditTemplate(), taskListElement);
-  tasksData.forEach((task) => render(createTaskTemplate(task), taskListElement));
+  render(createTaskEditTemplate(tasksData[0]), taskListElement);
+  tasksData.slice(1).forEach((task) => render(createTaskTemplate(task), taskListElement));
 
 };
 

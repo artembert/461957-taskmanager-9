@@ -1,3 +1,5 @@
+import {monthNames} from "../util/monthNames";
+
 export const createTaskTemplate = (task) => {
   return `<article class="card card--${task.color}
     ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
@@ -33,8 +35,11 @@ export const createTaskTemplate = (task) => {
           <div class="card__dates">
             <div class="card__date-deadline">
               <p class="card__input-deadline-wrap">
-                <span class="card__date">23 September</span>
-                <span class="card__time">${new Date(task.dueDate).toDateString()}</span>
+                <span class="card__date">
+                ${new Date(task.dueDate).getDate()} ${monthNames[new Date(task.dueDate).getMonth()].toUpperCase()}</span>
+                <span class="card__time">
+                    
+                    </span>
                 
               </p>
             </div>

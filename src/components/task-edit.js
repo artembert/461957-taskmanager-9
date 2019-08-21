@@ -26,7 +26,7 @@ export const createTaskEditTemplate = () => {
                       class="card__text"
                       placeholder="Start typing your text here..."
                       name="text"
-                    >Here is a card with filled data</textarea>
+                    >${task.description}</textarea>
         </label>
       </div>
 
