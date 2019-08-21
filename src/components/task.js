@@ -36,10 +36,11 @@ export const createTaskTemplate = (task) => {
             <div class="card__date-deadline">
               <p class="card__input-deadline-wrap">
                 <span class="card__date">
-                ${new Date(task.dueDate).getDate()} ${monthNames[new Date(task.dueDate).getMonth()].toUpperCase()}</span>
+                ${new Date(task.dueDate).getDate()} ${monthNames[new Date(task.dueDate).getMonth()].toUpperCase()}
+                </span>
                 <span class="card__time">
-                    
-                    </span>
+                ${new Date(task.dueDate).getHours()}:${new Date(task.dueDate).getMinutes()}    
+                </span>
                 
               </p>
             </div>
