@@ -5,6 +5,7 @@ import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import {createTaskTemplate} from './components/task';
 import {createTaskEditTemplate} from './components/task-edit';
+import {getTask} from './data';
 
 const render = (markup, container, place = `beforeend`) => {
   container.insertAdjacentHTML(place, markup);
@@ -35,7 +36,7 @@ const renderPage = () => {
   render(createLoadMoreButtonTemplate(), boardElement);
   render(createTaskEditTemplate(), taskListElement);
   for (let i = 0; i < 3; i++) {
-    render(createTaskTemplate(), taskListElement);
+    render(createTaskTemplate(getTask()), taskListElement);
   }
 };
 
