@@ -1,6 +1,6 @@
 const MS_IN_DAY = 24 * 60 * 60 * 1000;
 
-export const getTask = () => ({
+const getTask = () => ({
   description:
     [
       `Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`,
@@ -17,8 +17,32 @@ export const getTask = () => ({
   },
   tags: new Set([`homework`, `theory`, `practice`, `intensive`, `keks`]
     .sort(() => Math.random() - 0.5)
-    .slice(0, Math.floor(Math.random() * 3 + 1))),
+    .slice(0, Math.floor(Math.random() * 4))),
   color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
   isFavorite: Math.random() > 0.7,
-  isArchive: Math.random() > 0.7
+  isArchive: Math.random() > 0.7,
 });
+
+export const tasksData = [];
+for (let i = 0; i < 7; i++) {
+  tasksData.push(getTask());
+}
+
+export const getFilters = () => [
+  {title: `all`, count: tasksData.length},
+  {title: `overdue`, count: tasksData.filter((task) => task.dueDate < Date.now()).length},
+  {
+    title: `today`, count: tasksData.filter((task) => {
+      const date = new Date();
+      const taskDate = new Date(task.dueDate);
+      return date.toDateString() === taskDate.toDateString();
+    }).length,
+  },
+  {title: `favourites`, count: tasksData.filter((task) => task.isFavorite).length},
+  {
+    title: `repeating`, count: tasksData.filter((task) =>
+      Object.values(task.repeatingDays).some((value) => value)).length,
+  },
+  {title: `tags`, count: tasksData.filter((task) => task.tags.length).length},
+  {title: `archive`, count: tasksData.filter((task) => task.isArchive).length},
+];
