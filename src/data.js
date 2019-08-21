@@ -1,4 +1,5 @@
 const MS_IN_DAY = 24 * 60 * 60 * 1000;
+export const colors = [`black`, `yellow`, `blue`, `green`, `pink`];
 
 const getTask = () => ({
   description:
@@ -18,13 +19,13 @@ const getTask = () => ({
   tags: new Set([`homework`, `theory`, `practice`, `intensive`, `keks`]
     .sort(() => Math.random() - 0.5)
     .slice(0, Math.floor(Math.random() * 4))),
-  color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
+  color: colors[Math.floor(Math.random() * colors.length)],
   isFavorite: Math.random() > 0.7,
   isArchive: Math.random() > 0.7,
 });
 
 export const tasksData = [];
-for (let i = 0; i < 7; i++) {
+for (let i = 0; i < 8; i++) {
   tasksData.push(getTask());
 }
 
