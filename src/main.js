@@ -7,6 +7,11 @@ import {createTaskTemplate} from './components/task';
 import {createTaskEditTemplate} from './components/task-edit';
 import {getTask} from './data';
 
+const tasksData = [];
+for (let i = 0; i < 3; i++) {
+  tasksData.push(getTask());
+}
+
 const render = (markup, container, place = `beforeend`) => {
   container.insertAdjacentHTML(place, markup);
 };
@@ -35,9 +40,8 @@ const renderPage = () => {
 
   render(createLoadMoreButtonTemplate(), boardElement);
   render(createTaskEditTemplate(), taskListElement);
-  for (let i = 0; i < 3; i++) {
-    render(createTaskTemplate(getTask()), taskListElement);
-  }
+  tasksData.forEach((task) => render(createTaskTemplate(task), taskListElement));
+
 };
 
 renderPage();
