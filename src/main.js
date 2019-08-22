@@ -5,25 +5,11 @@ import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import {createTaskTemplate} from './components/task';
 import {createTaskEditTemplate} from './components/task-edit';
-import {tasksData} from "./data";
-import {getFilters} from "./data";
-
-const render = (markup, container, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, markup);
-};
+import {getFilters, tasksData} from "./data";
+import {findElement, render} from "./util/DOM";
 
 const TASK_ON_PAGE = 8;
 let renderTasksCount;
-
-const getByIdFn = (selector) => document.getElementById(selector);
-
-const findElement = (selector, searchFunction = getByIdFn) => {
-  const element = searchFunction(selector);
-  if (!element) {
-    throw new Error(`Element \`${selector}\` did not found`);
-  }
-  return element;
-};
 
 const renderPage = () => {
   const siteMainElement = findElement(`main`);
