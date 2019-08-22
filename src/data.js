@@ -1,31 +1,24 @@
 const MS_IN_DAY = 86400000;
+const DAYS_IN_WEEK = 7;
+const TASK_COUNT = 19;
 
 const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
-const descriptionOptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
+const descriptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
+const days = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
 export const colors = [`black`, `yellow`, `blue`, `green`, `pink`];
 
 const getTask = () => ({
-  description: descriptionOptions[Math.floor(Math.random() * 3)],
-  dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * MS_IN_DAY,
-  repeatingDays: {
-    Mo: Boolean(Math.round(Math.random() < 0.15)),
-    Tu: Boolean(Math.round(Math.random() < 0.15)),
-    We: Boolean(Math.round(Math.random() < 0.15)),
-    Th: Boolean(Math.round(Math.random() < 0.15)),
-    Fr: Boolean(Math.round(Math.random() < 0.15)),
-    Sa: Boolean(Math.round(Math.random() < 0.15)),
-    Su: Boolean(Math.round(Math.random() < 0.15)),
-  },
-  tags: new Set(tags
-    .sort(() => Math.random() - 0.5)
-    .slice(0, Math.floor(Math.random() * 4))),
-  color: colors[Math.floor(Math.random() * colors.length)],
-  isFavorite: Math.random() > 0.7,
-  isArchive: Math.random() > 0.7,
+  description: getRandomDescription(descriptions),
+  dueDate: getDueDate(),
+  repeatingDays: getRepeatingDays(days),
+  tags: getRandomTags(tags),
+  color: getRandomColor(colors),
+  isFavorite: getBooleanGivenProbability(0.7),
+  isArchive: getBooleanGivenProbability(0.7),
 });
 
 export const tasksData = [];
-for (let i = 0; i < 19; i++) {
+for (let i = 0; i < TASK_COUNT; i++) {
   tasksData.push(getTask());
 }
 
@@ -47,3 +40,32 @@ export const getFilters = () => [
   {title: `tags`, count: tasksData.filter((task) => task.tags.length).length},
   {title: `archive`, count: tasksData.filter((task) => task.isArchive).length},
 ];
+
+function getRandomDescription(descriptionList) {
+  return descriptionList[Math.floor(Math.random() * descriptionList.length)];
+}
+
+function getDueDate() {
+  return Date.now() + 1 + Math.floor(Math.random() * DAYS_IN_WEEK) * MS_IN_DAY;
+}
+
+function getRepeatingDays(dayList) {
+  return dayList.reduce((week, day) => {
+    week[day] = getBooleanGivenProbability(0.15);
+    return week;
+  }, {});
+}
+
+function getRandomTags(tagList) {
+  return new Set(tagList
+    .sort(() => Math.random() - 0.5)
+    .slice(0, Math.floor(Math.random() * 4)));
+}
+
+function getRandomColor(colorList) {
+  return colorList[Math.floor(Math.random() * colors.length)];
+}
+
+function getBooleanGivenProbability(probability) {
+  return Math.random() < probability;
+}
