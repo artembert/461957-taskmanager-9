@@ -1,11 +1,11 @@
-const MS_IN_DAY = 24 * 60 * 60 * 1000;
+const MS_IN_DAY = 86400000;
+
+const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
+const descriptionOptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
 export const colors = [`black`, `yellow`, `blue`, `green`, `pink`];
 
 const getTask = () => ({
-  description:
-    [
-      `Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`,
-    ][Math.floor(Math.random() * 3)],
+  description: descriptionOptions[Math.floor(Math.random() * 3)],
   dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * MS_IN_DAY,
   repeatingDays: {
     Mo: Boolean(Math.round(Math.random() < 0.15)),
@@ -16,7 +16,7 @@ const getTask = () => ({
     Sa: Boolean(Math.round(Math.random() < 0.15)),
     Su: Boolean(Math.round(Math.random() < 0.15)),
   },
-  tags: new Set([`homework`, `theory`, `practice`, `intensive`, `keks`]
+  tags: new Set(tags
     .sort(() => Math.random() - 0.5)
     .slice(0, Math.floor(Math.random() * 4))),
   color: colors[Math.floor(Math.random() * colors.length)],
