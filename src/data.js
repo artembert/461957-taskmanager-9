@@ -1,6 +1,7 @@
 const MS_IN_DAY = 86400000;
 const DAYS_IN_WEEK = 7;
 const TASK_COUNT = 19;
+const MAX_TAGS_COUNT = 3;
 
 const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 const descriptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
@@ -59,7 +60,7 @@ function getRepeatingDays(dayList) {
 function getRandomTags(tagList) {
   return new Set(tagList
     .sort(() => Math.random() - 0.5)
-    .slice(0, Math.floor(Math.random() * 4)));
+    .slice(0, Math.floor(Math.random() * (MAX_TAGS_COUNT + 1))));
 }
 
 function getRandomColor(colorList) {
