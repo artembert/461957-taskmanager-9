@@ -1,4 +1,4 @@
-import {monthNames} from "../util/monthNames";
+import {monthNames} from "../util/month-names";
 
 export const createTaskTemplate = (task) => {
   return `<article class="card card--${task.color}
