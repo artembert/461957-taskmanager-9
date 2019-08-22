@@ -25,21 +25,12 @@ for (let i = 0; i < TASK_COUNT; i++) {
 
 export const getFilters = () => [
   {title: `all`, count: tasksData.length},
-  {title: `overdue`, count: tasksData.filter((task) => task.dueDate < Date.now()).length},
-  {
-    title: `today`, count: tasksData.filter((task) => {
-      const date = new Date();
-      const taskDate = new Date(task.dueDate);
-      return date.toDateString() === taskDate.toDateString();
-    }).length,
-  },
-  {title: `favourites`, count: tasksData.filter((task) => task.isFavorite).length},
-  {
-    title: `repeating`, count: tasksData.filter((task) =>
-      Object.values(task.repeatingDays).some((value) => value)).length,
-  },
-  {title: `tags`, count: tasksData.filter((task) => task.tags.length).length},
-  {title: `archive`, count: tasksData.filter((task) => task.isArchive).length},
+  {title: `overdue`, count: getOverdueTaskCount(tasksData)},
+  {title: `today`, count: getTodayTaskCount(tasksData)},
+  {title: `favourites`, count: getFavouritesTaskCount(tasksData)},
+  {title: `repeating`, count: getRepeatingTaskCount(tasksData)},
+  {title: `tags`, count: getTaggedTaskCount(tasksData)},
+  {title: `archive`, count: getArchiveTaskCount(tasksData)},
 ];
 
 function getRandomDescription(descriptionList) {
@@ -69,4 +60,32 @@ function getRandomColor(colorList) {
 
 function getBooleanGivenProbability(probability) {
   return Math.random() < probability;
+}
+
+function getOverdueTaskCount(taskList) {
+  return taskList.filter((task) => task.dueDate < Date.now()).length;
+}
+
+function getTodayTaskCount(taskList) {
+  return taskList.filter((task) => {
+    const date = new Date();
+    const taskDate = new Date(task.dueDate);
+    return date.toDateString() === taskDate.toDateString();
+  }).length;
+}
+
+function getRepeatingTaskCount(taskList) {
+  return taskList.filter((task) => Object.values(task.repeatingDays).some((value) => value)).length;
+}
+
+function getFavouritesTaskCount(taskList) {
+  return taskList.filter((task) => task.isFavorite).length;
+}
+
+function getTaggedTaskCount(taskList) {
+  return taskList.filter((task) => task.tags.length).length;
+}
+
+function getArchiveTaskCount(taskList) {
+  return taskList.filter((task) => task.isArchive).length;
 }
