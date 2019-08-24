@@ -3,6 +3,7 @@ const DAYS_IN_WEEK = 7;
 const TASK_COUNT = 19;
 const MAX_TAGS_COUNT = 3;
 
+const dateNow = new Date();
 const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 const descriptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
 const days = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
@@ -10,7 +11,7 @@ export const colors = [`black`, `yellow`, `blue`, `green`, `pink`];
 
 const getTask = () => ({
   description: getRandomDescription(descriptions),
-  dueDate: getDueDate(),
+  dueDate: getDueDate(dateNow),
   repeatingDays: getRepeatingDays(days),
   tags: getRandomTags(tags),
   color: getRandomColor(colors),
@@ -22,8 +23,8 @@ export const tasksData = new Array(TASK_COUNT).fill(undefined).map(() => getTask
 
 export const getFilters = () => [
   {title: `all`, count: tasksData.length},
-  {title: `overdue`, count: getOverdueTaskCount(tasksData)},
-  {title: `today`, count: getTodayTaskCount(tasksData)},
+  {title: `overdue`, count: getOverdueTaskCount(tasksData, dateNow)},
+  {title: `today`, count: getTodayTaskCount(tasksData, dateNow)},
   {title: `favourites`, count: getFavouritesTaskCount(tasksData)},
   {title: `repeating`, count: getRepeatingTaskCount(tasksData)},
   {title: `tags`, count: getTaggedTaskCount(tasksData)},
@@ -34,8 +35,8 @@ function getRandomDescription(descriptionList) {
   return descriptionList[getRandomInteger(0, descriptionList.length)];
 }
 
-function getDueDate() {
-  return Date.now() + 1 + getRandomInteger(0, DAYS_IN_WEEK) * MS_IN_DAY;
+function getDueDate(currentDate) {
+  return currentDate + 1 + getRandomInteger(0, DAYS_IN_WEEK) * MS_IN_DAY;
 }
 
 function getRepeatingDays(dayList) {
@@ -63,15 +64,14 @@ function getRandomInteger(min = 0, max) {
   return Math.floor(min + Math.random() * (max - min));
 }
 
-function getOverdueTaskCount(taskList) {
-  return taskList.filter((task) => task.dueDate < Date.now()).length;
+function getOverdueTaskCount(taskList, currentDate) {
+  return taskList.filter((task) => task.dueDate < currentDate).length;
 }
 
-function getTodayTaskCount(taskList) {
+function getTodayTaskCount(taskList, currentDate) {
   return taskList.filter((task) => {
-    const date = new Date();
     const taskDate = new Date(task.dueDate);
-    return date.toDateString() === taskDate.toDateString();
+    return currentDate.toDateString() === taskDate.toDateString();
   }).length;
 }
 
