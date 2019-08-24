@@ -6,22 +6,22 @@ import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import {createTaskTemplate} from './components/task';
 import {createTaskEditTemplate} from './components/task-edit';
 import {getFilters, tasksData} from "./data";
-import {findElement, render} from "./util/dom";
+import {render} from "./util/dom";
 
 const TASK_ON_PAGE = 8;
 let renderTasksCount;
 
 const renderPage = () => {
-  const siteMainElement = findElement(`main`);
-  const siteHeaderElement = findElement(`control`);
+  const siteMainElement = document.querySelector(`main`);
+  const siteHeaderElement = document.querySelector(`.main__control`);
 
   render(createSiteMenuTemplate(), siteHeaderElement);
   render(createSearchTemplate(), siteMainElement);
   render(createFilterTemplate(getFilters()), siteMainElement);
   render(createBoardTemplate(), siteMainElement);
 
-  const boardElement = findElement(`board`);
-  const taskListElement = findElement(`board-tasks`);
+  const boardElement = document.querySelector(`.board`);
+  const taskListElement = document.querySelector(`.board__tasks`);
 
   render(createLoadMoreButtonTemplate(), boardElement);
   render(createTaskEditTemplate(tasksData[0]), taskListElement);
