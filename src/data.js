@@ -31,11 +31,11 @@ export const getFilters = () => [
 ];
 
 function getRandomDescription(descriptionList) {
-  return descriptionList[Math.floor(Math.random() * descriptionList.length)];
+  return descriptionList[getRandomInteger(0, descriptionList.length)];
 }
 
 function getDueDate() {
-  return Date.now() + 1 + Math.floor(Math.random() * DAYS_IN_WEEK) * MS_IN_DAY;
+  return Date.now() + 1 + getRandomInteger(0, DAYS_IN_WEEK) * MS_IN_DAY;
 }
 
 function getRepeatingDays(dayList) {
@@ -47,16 +47,20 @@ function getRepeatingDays(dayList) {
 
 function getRandomTags(tagList) {
   return new Set(tagList
-    .sort(() => Math.random() - 0.5)
-    .slice(0, Math.floor(Math.random() * (MAX_TAGS_COUNT + 1))));
+  .sort(() => Math.random() - 0.5)
+  .slice(0, getRandomInteger(0, MAX_TAGS_COUNT + 1)));
 }
 
 function getRandomColor(colorList) {
-  return colorList[Math.floor(Math.random() * colors.length)];
+  return colorList[getRandomInteger(0, colorList.length)];
 }
 
 function getBooleanGivenProbability(probability) {
   return Math.random() < probability;
+}
+
+function getRandomInteger(min = 0, max) {
+  return Math.floor(min + Math.random() * (max - min));
 }
 
 function getOverdueTaskCount(taskList) {
