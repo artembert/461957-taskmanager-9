@@ -18,10 +18,7 @@ const getTask = () => ({
   isArchive: getBooleanGivenProbability(0.7),
 });
 
-export const tasksData = [];
-for (let i = 0; i < TASK_COUNT; i++) {
-  tasksData.push(getTask());
-}
+export const tasksData = new Array(TASK_COUNT).fill(undefined).map(() => getTask());
 
 export const getFilters = () => [
   {title: `all`, count: tasksData.length},
