@@ -6,7 +6,7 @@ import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import {createTaskTemplate} from './components/task';
 import {createTaskEditTemplate} from './components/task-edit';
 import {getFilters, tasksData} from "./data";
-import {findElement, render} from "./util/DOM";
+import {findElement, render} from "./util/dom";
 
 const TASK_ON_PAGE = 8;
 let renderTasksCount;
