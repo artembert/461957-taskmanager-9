@@ -1,6 +1,7 @@
 import {isTaskRepeating} from "../util/date";
+import {format} from "date-fns";
 
-export const createTaskTemplate = ({description, dueDate, repeatingDays, tags, color}, monthNames) => {
+export const createTaskTemplate = ({description, dueDate, repeatingDays, tags, color}) => {
   return `<article class="card card--${color} ${isTaskRepeating(repeatingDays) ? `card--repeat` : ``}">
   <div class="card__form">
     <div class="card__inner">
@@ -11,10 +12,7 @@ export const createTaskTemplate = ({description, dueDate, repeatingDays, tags, c
         <button type="button" class="card__btn card__btn--archive">
           archive
         </button>
-        <button
-          type="button"
-          class="card__btn card__btn--favorites card__btn--disabled"
-        >
+        <button type="button" class="card__btn card__btn--favorites card__btn--disabled">
           favorites
         </button>
       </div>
@@ -34,13 +32,8 @@ export const createTaskTemplate = ({description, dueDate, repeatingDays, tags, c
           <div class="card__dates">
             <div class="card__date-deadline">
               <p class="card__input-deadline-wrap">
-                <span class="card__date">
-                ${new Date(dueDate).getDate()} ${monthNames[new Date(dueDate).getMonth()].toUpperCase()}
-                </span>
-                <span class="card__time">
-                ${new Date(dueDate).getHours()}:${new Date(dueDate).getMinutes()}    
-                </span>
-                
+                <span class="card__date">${format(dueDate, `d MMMM`).toUpperCase()}</span>
+                <span class="card__time">${format(dueDate, `H:mm`)}</span>
               </p>
             </div>
           </div>

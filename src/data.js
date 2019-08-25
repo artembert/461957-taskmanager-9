@@ -1,9 +1,12 @@
+import isSameDay from "date-fns/isSameDay";
+import isAfter from "date-fns/isAfter";
+
 const MS_IN_DAY = 86400000;
 const DAYS_IN_WEEK = 7;
 const TASK_COUNT = 19;
 const MAX_TAGS_COUNT = 3;
 
-const dateNow = new Date();
+const dateNow = Date.now();
 const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 const descriptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
 const days = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
@@ -36,7 +39,7 @@ function getRandomDescription(descriptionList) {
 }
 
 function getDueDate(currentDate) {
-  return currentDate + 1 + getRandomInteger(0, DAYS_IN_WEEK) * MS_IN_DAY;
+  return currentDate + 1 + getRandomInteger(-DAYS_IN_WEEK, DAYS_IN_WEEK) * MS_IN_DAY;
 }
 
 function getRepeatingDays(dayList) {
@@ -65,14 +68,11 @@ function getRandomInteger(min = 0, max) {
 }
 
 function getOverdueTaskCount(taskList, currentDate) {
-  return taskList.filter((task) => task.dueDate < currentDate).length;
+  return taskList.filter((task) => isAfter(currentDate, task.dueDate)).length;
 }
 
 function getTodayTaskCount(taskList, currentDate) {
-  return taskList.filter((task) => {
-    const taskDate = new Date(task.dueDate);
-    return currentDate.toDateString() === taskDate.toDateString();
-  }).length;
+  return taskList.filter((task) => !!isSameDay(task.dueDate, currentDate)).length;
 }
 
 function getRepeatingTaskCount(taskList) {
