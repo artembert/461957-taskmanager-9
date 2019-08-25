@@ -1,6 +1,4 @@
-import {monthNames} from "../util/month-names";
-
-export const createTaskTemplate = (task) => {
+export const createTaskTemplate = (task, monthNames) => {
   return `<article class="card card--${task.color}
     ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
   <div class="card__form">

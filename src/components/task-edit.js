@@ -1,6 +1,4 @@
-import {colors} from "../data";
-
-export const createTaskEditTemplate = (task) => {
+export const createTaskEditTemplate = (task, colors) => {
   return `<article class="card card--${task.color} card--edit
     ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
