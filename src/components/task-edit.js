@@ -1,6 +1,8 @@
-export const createTaskEditTemplate = (task, colors) => {
-  return `<article class="card card--${task.color} card--edit
-    ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
+import {isTaskRepeating} from "../util/date";
+
+export const createTaskEditTemplate = ({description, color, repeatingDays}, colors) => {
+  return `<article 
+class="card card--${color} card--edit ${isTaskRepeating(repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -27,7 +29,7 @@ export const createTaskEditTemplate = (task, colors) => {
                       class="card__text"
                       placeholder="Start typing your text here..."
                       name="text"
-                    >${task.description}</textarea>
+                    >${description}</textarea>
         </label>
       </div>
 
@@ -195,17 +197,17 @@ export const createTaskEditTemplate = (task, colors) => {
         <div class="card__colors-inner">
           <h3 class="card__colors-title">Color</h3>
           <div class="card__colors-wrap">
-          ${colors.map((color) => `<input
+          ${colors.map((taskColor) => `<input
               type="radio"
-              id="color-${color}-4"
-              class="card__color-input card__color-input--${color} visually-hidden"
+              id="color-${taskColor}-4"
+              class="card__color-input card__color-input--${taskColor} visually-hidden"
               name="color"
-              value="${color}"
+              value="${taskColor}"
             />
             <label
-              for="color-${color}-4"
-              class="card__color card__color--${color}"
-            >${color}</label
+              for="color-${taskColor}-4"
+              class="card__color card__color--${taskColor}"
+            >${taskColor}</label
             >`).join(``)}
         </div>
       </div>
