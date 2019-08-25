@@ -1,6 +1,7 @@
-export const createTaskTemplate = (task, monthNames) => {
-  return `<article class="card card--${task.color}
-    ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
+import {isTaskRepeating} from "../util/date";
+
+export const createTaskTemplate = ({description, dueDate, repeatingDays, tags, color}, monthNames) => {
+  return `<article class="card card--${color} ${isTaskRepeating(repeatingDays) ? `card--repeat` : ``}">
   <div class="card__form">
     <div class="card__inner">
       <div class="card__control">
@@ -25,7 +26,7 @@ export const createTaskTemplate = (task, monthNames) => {
       </div>
 
       <div class="card__textarea-wrap">
-        <p class="card__text">${task.description}</p>
+        <p class="card__text">${description}</p>
       </div>
 
       <div class="card__settings">
@@ -34,10 +35,10 @@ export const createTaskTemplate = (task, monthNames) => {
             <div class="card__date-deadline">
               <p class="card__input-deadline-wrap">
                 <span class="card__date">
-                ${new Date(task.dueDate).getDate()} ${monthNames[new Date(task.dueDate).getMonth()].toUpperCase()}
+                ${new Date(dueDate).getDate()} ${monthNames[new Date(dueDate).getMonth()].toUpperCase()}
                 </span>
                 <span class="card__time">
-                ${new Date(task.dueDate).getHours()}:${new Date(task.dueDate).getMinutes()}    
+                ${new Date(dueDate).getHours()}:${new Date(dueDate).getMinutes()}    
                 </span>
                 
               </p>
@@ -46,7 +47,7 @@ export const createTaskTemplate = (task, monthNames) => {
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-            ${Array.from(task.tags).map((tag) =>
+            ${Array.from(tags).map((tag) =>
     `<span class="card__hashtag-inner">
                 <span class="card__hashtag-name">
                   #${tag}
