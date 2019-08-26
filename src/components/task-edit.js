@@ -1,5 +1,6 @@
-export const createTaskEditTemplate = () => {
-  return `<article class="card card--edit card--yellow card--repeat">
+export const createTaskEditTemplate = (task, colors) => {
+  return `<article class="card card--${task.color} card--edit
+    ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -26,7 +27,7 @@ export const createTaskEditTemplate = () => {
                       class="card__text"
                       placeholder="Start typing your text here..."
                       name="text"
-                    >Here is a card with filled data</textarea>
+                    >${task.description}</textarea>
         </label>
       </div>
 
@@ -194,68 +195,18 @@ export const createTaskEditTemplate = () => {
         <div class="card__colors-inner">
           <h3 class="card__colors-title">Color</h3>
           <div class="card__colors-wrap">
-            <input
+          ${colors.map((color) => `<input
               type="radio"
-              id="color-black-4"
-              class="card__color-input card__color-input--black visually-hidden"
+              id="color-${color}-4"
+              class="card__color-input card__color-input--${color} visually-hidden"
               name="color"
-              value="black"
+              value="${color}"
             />
             <label
-              for="color-black-4"
-              class="card__color card__color--black"
-            >black</label
-            >
-            <input
-              type="radio"
-              id="color-yellow-4"
-              class="card__color-input card__color-input--yellow visually-hidden"
-              name="color"
-              value="yellow"
-              checked
-            />
-            <label
-              for="color-yellow-4"
-              class="card__color card__color--yellow"
-            >yellow</label
-            >
-            <input
-              type="radio"
-              id="color-blue-4"
-              class="card__color-input card__color-input--blue visually-hidden"
-              name="color"
-              value="blue"
-            />
-            <label
-              for="color-blue-4"
-              class="card__color card__color--blue"
-            >blue</label
-            >
-            <input
-              type="radio"
-              id="color-green-4"
-              class="card__color-input card__color-input--green visually-hidden"
-              name="color"
-              value="green"
-            />
-            <label
-              for="color-green-4"
-              class="card__color card__color--green"
-            >green</label
-            >
-            <input
-              type="radio"
-              id="color-pink-4"
-              class="card__color-input card__color-input--pink visually-hidden"
-              name="color"
-              value="pink"
-            />
-            <label
-              for="color-pink-4"
-              class="card__color card__color--pink"
-            >pink</label
-            >
-          </div>
+              for="color-${color}-4"
+              class="card__color card__color--${color}"
+            >${color}</label
+            >`).join(``)}
         </div>
       </div>
 
