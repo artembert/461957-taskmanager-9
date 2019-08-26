@@ -39,7 +39,7 @@ function getRandomDescription(descriptionList) {
 }
 
 function getDueDate(currentDate) {
-  return currentDate + 1 + getRandomInteger(-DAYS_IN_WEEK, DAYS_IN_WEEK) * MS_IN_DAY;
+  return currentDate + 1 + getRandomInteger(0, 2 * DAYS_IN_WEEK) * MS_IN_DAY * (Math.random() - 0.5);
 }
 
 function getRepeatingDays(dayList) {
