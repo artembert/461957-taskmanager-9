@@ -31,11 +31,8 @@ export default class TaskEdit extends Task {
 
       <div class="card__textarea-wrap">
         <label>
-                    <textarea
-                      class="card__text"
-                      placeholder="Start typing your text here..."
-                      name="text"
-                    >${this._description}</textarea>
+          <textarea
+            class="card__text" placeholder="Start typing your text here..." name="text">${this._description}</textarea>
         </label>
       </div>
 
@@ -152,12 +149,7 @@ export default class TaskEdit extends Task {
             </div>
 
             <label>
-              <input
-                type="text"
-                class="card__hashtag-input"
-                name="hashtag-input"
-                placeholder="Type new hashtag here"
-              />
+              <input type="text" class="card__hashtag-input" name="hashtag-input" placeholder="Type new hashtag here"/>
             </label>
           </div>
         </div>
@@ -176,7 +168,7 @@ export default class TaskEdit extends Task {
               for="color-${color}-4"
               class="card__color card__color--${color}"
             >${color}</label
-            >`).join(``)}
+            >`.trim()).join(``)}
         </div>
       </div>
 
