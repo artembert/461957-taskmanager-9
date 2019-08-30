@@ -2,7 +2,7 @@ import Menu from './components/menu';
 import Search from './components/search';
 import Filter from './components/filter';
 import Board from './components/board';
-import {createLoadMoreButtonTemplate} from './components/load-more-button';
+import LoadMoreButton from './components/load-more-button';
 import TaskEdit from './components/task-edit';
 import {getFilters, getMenu, getSortToggles, tasksData} from "./data";
 import {render} from "./util/dom";
@@ -27,7 +27,7 @@ function renderPage() {
   const boardElement = document.querySelector(`.board`);
   const taskListElement = document.querySelector(`.board__tasks`);
 
-  render(createLoadMoreButtonTemplate(), boardElement);
+  renderLoadMoreButton(undefined, boardElement);
   renderTaskEdit(tasksData[0], taskListElement);
   renderTasksCount++;
 
@@ -80,6 +80,11 @@ function renderMenu(menuData, container) {
 function renderBoard(sortToggles, container) {
   const board = new Board(sortToggles);
   render(board.getTemplate(), container);
+}
+
+function renderLoadMoreButton(data, container) {
+  const loadMoreButton = new LoadMoreButton(data);
+  render(loadMoreButton.getTemplate(), container);
 }
 
 renderPage();
