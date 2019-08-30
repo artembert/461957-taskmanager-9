@@ -1,6 +1,14 @@
-export const createTaskEditTemplate = (task, colors) => {
-  return `<article class="card card--${task.color} card--edit
-    ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
+import Task from "./task";
+import {colors} from "../models/colors";
+
+export default class TaskEdit extends Task {
+  constructor(...args) {
+    super(...args);
+  }
+
+  getTemplate() {
+    return `<article class="card card--${this._color} card--edit
+    ${Object.values(this._repeatingDays).some((value) => value) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -27,7 +35,7 @@ export const createTaskEditTemplate = (task, colors) => {
                       class="card__text"
                       placeholder="Start typing your text here..."
                       name="text"
-                    >${task.description}</textarea>
+                    >${this._description}</textarea>
         </label>
       </div>
 
@@ -216,5 +224,7 @@ export const createTaskEditTemplate = (task, colors) => {
       </div>
     </div>
   </form>
-</article>`;
-};
+</article>`.trim();
+  }
+}
+

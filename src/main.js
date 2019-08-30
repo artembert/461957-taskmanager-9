@@ -3,10 +3,10 @@ import {createSearchTemplate} from './components/search';
 import {createFilterTemplate} from './components/filter';
 import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
-import {Task} from './components/task';
-import {createTaskEditTemplate} from './components/task-edit';
-import {colors, getFilters, tasksData} from "./data";
+import TaskEdit from './components/task-edit';
+import {getFilters, tasksData} from "./data";
 import {render} from "./util/dom";
+import Task from "./components/task";
 
 const TASK_ON_PAGE = 8;
 
@@ -25,7 +25,9 @@ function renderPage() {
   const taskListElement = document.querySelector(`.board__tasks`);
 
   render(createLoadMoreButtonTemplate(), boardElement);
-  render(createTaskEditTemplate(tasksData[0], colors), taskListElement);
+  renderTaskEdit(tasksData[0], taskListElement);
+  renderTasksCount++;
+  
   tasksData
     .slice(1, TASK_ON_PAGE)
     .forEach((task) => {
@@ -50,6 +52,11 @@ function renderPage() {
 function renderTask(taskData, container) {
   const task = new Task(taskData);
   render(task.getTemplate(), container);
+}
+
+function renderTaskEdit(taskData, container) {
+  const taskEdit = new TaskEdit(taskData);
+  render(taskEdit.getTemplate(), container);
 }
 
 renderPage();
