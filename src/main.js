@@ -10,9 +10,15 @@ import Task from "./components/task";
 
 const TASK_ON_PAGE = 8;
 
-let renderTasksCount;
+// let renderTasksCount;
+// let boardEl;
+// let taskListEl;
+// let loadMoreButton;
+
+renderPage();
 
 function renderPage() {
+  let renderTasksCount;
   const siteMainElement = document.querySelector(`main`);
   const siteHeaderElement = document.querySelector(`.main__control`);
 
@@ -24,32 +30,22 @@ function renderPage() {
   renderFilter((getFilters()), siteMainElement);
   renderBoard(getSortToggles(), siteMainElement);
 
-  const boardElement = document.querySelector(`.board`);
-  const taskListElement = document.querySelector(`.board__tasks`);
+  const boardEl = document.querySelector(`.board`);
+  const taskListEl = document.querySelector(`.board__tasks`);
 
-  renderLoadMoreButton(undefined, boardElement);
-  renderTaskEdit(tasksData[0], taskListElement);
+  renderLoadMoreButton(undefined, boardEl);
+  renderTaskEdit(tasksData[0], taskListEl);
   renderTasksCount++;
 
   tasksData
     .slice(1, TASK_ON_PAGE)
     .forEach((task) => {
-      renderTask(task, taskListElement);
+      renderTask(task, taskListEl);
       renderTasksCount++;
     });
 
   const loadMoreButton = document.querySelector(`.load-more`);
   loadMoreButton.addEventListener(`click`, onLoadMoreTasks);
-
-  function onLoadMoreTasks() {
-    // tasksData
-    //   .slice(renderTasksCount, renderTasksCount + TASK_ON_PAGE)
-    //   .forEach((task) => render(createTaskTemplate(task), taskListElement));
-    // renderTasksCount += TASK_ON_PAGE;
-    // if (renderTasksCount > tasksData.length) {
-    //   loadMoreButton.remove();
-    // }
-  }
 }
 
 function renderFilter(filterData, container) {
@@ -83,8 +79,18 @@ function renderBoard(sortToggles, container) {
 }
 
 function renderLoadMoreButton(data, container) {
-  const loadMoreButton = new LoadMoreButton(data);
-  render(loadMoreButton.getTemplate(), container);
+  const button = new LoadMoreButton(data);
+  render(button.getTemplate(), container);
+  button.getElement().addEventListener(`click`, onLoadMoreTasks.bind(null,  ));
 }
 
-renderPage();
+const onLoadMoreTasks = function ({renderTasksCount, }, ) {
+  tasksData
+    .slice(renderTasksCount, renderTasksCount + TASK_ON_PAGE)
+    .forEach((task) => renderTask(task, taskListEl));
+  renderTasksCount += TASK_ON_PAGE;
+  if (renderTasksCount > tasksData.length) {
+    loadMoreButton.remove();
+  }
+};
+
