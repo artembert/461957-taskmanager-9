@@ -1,5 +1,6 @@
 import isSameDay from "date-fns/isSameDay";
 import isAfter from "date-fns/isAfter";
+import {colors} from "./models/colors";
 
 const MS_IN_DAY = 86400000;
 const DAYS_IN_WEEK = 7;
@@ -10,7 +11,6 @@ const dateNow = Date.now();
 const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 const descriptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
 const days = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
-export const colors = [`black`, `yellow`, `blue`, `green`, `pink`];
 
 const getTask = () => ({
   description: getRandomDescription(descriptions),
