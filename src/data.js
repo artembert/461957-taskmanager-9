@@ -34,6 +34,14 @@ export const getFilters = () => [
   {title: `archive`, count: getArchiveTaskCount(tasksData), isActive: false},
 ];
 
+export function getMenu() {
+  return [
+    {title: `+ ADD NEW TASK`, id: `new-task`, additionalClassName: `new-task`, isActive: false},
+    {title: `TASKS`, id: `task`, additionalClassName: ``, isActive: true},
+    {title: `STATISTICS`, id: `statistic`, additionalClassName: ``, isActive: false},
+  ];
+}
+
 function getRandomDescription(descriptionList) {
   return descriptionList[getRandomInteger(0, descriptionList.length)];
 }

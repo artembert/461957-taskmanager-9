@@ -1,10 +1,10 @@
-import {createSiteMenuTemplate} from './components/site-menu';
+import Menu from './components/menu';
 import Search from './components/search';
 import Filter from './components/filter';
 import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import TaskEdit from './components/task-edit';
-import {getFilters, tasksData} from "./data";
+import {getFilters, getMenu, tasksData} from "./data";
 import {render} from "./util/dom";
 import Task from "./components/task";
 
@@ -16,7 +16,7 @@ function renderPage() {
   const siteMainElement = document.querySelector(`main`);
   const siteHeaderElement = document.querySelector(`.main__control`);
 
-  render(createSiteMenuTemplate(), siteHeaderElement);
+  renderMenu(getMenu(), siteHeaderElement);
   renderSearch(undefined, siteMainElement);
   renderFilter((getFilters()), siteMainElement);
   render(createBoardTemplate(), siteMainElement);
@@ -69,6 +69,11 @@ function renderTaskEdit(taskData, container) {
 function renderSearch(searchData, container) {
   const search = new Search(searchData);
   render(search.getTemplate(), container);
+}
+
+function renderMenu(menuData, container) {
+  const menu = new Menu(menuData);
+  render(menu.getTemplate(), container);
 }
 
 renderPage();
