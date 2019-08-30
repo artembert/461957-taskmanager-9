@@ -1,4 +1,4 @@
-import {isTaskRepeating} from "../util/date";
+import {isTaskRepeating} from "../util/is-task-repeating";
 import {format} from "date-fns";
 import {BaseComponent} from "./base-component";
 

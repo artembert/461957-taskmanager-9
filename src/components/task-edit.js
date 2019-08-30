@@ -1,5 +1,6 @@
 import Task from "./task";
 import {colors} from "../models/colors";
+import {isTaskRepeating} from "../util/is-task-repeating";
 
 export default class TaskEdit extends Task {
   constructor(...args) {
@@ -7,8 +8,8 @@ export default class TaskEdit extends Task {
   }
 
   getTemplate() {
-    return `<article class="card card--${this._color} card--edit
-    ${Object.values(this._repeatingDays).some((value) => value) ? `card--repeat` : ``}">
+    return `<article
+    class="card card--${this._color} card--edit ${isTaskRepeating(this._repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -61,79 +62,11 @@ export default class TaskEdit extends Task {
 
             <fieldset class="card__repeat-days">
               <div class="card__repeat-days-inner">
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-mo-4"
-                  name="repeat"
-                  value="mo"
-                />
-                <label class="card__repeat-day" for="repeat-mo-4"
-                >mo</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-tu-4"
-                  name="repeat"
-                  value="tu"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-tu-4"
-                >tu</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-we-4"
-                  name="repeat"
-                  value="we"
-                />
-                <label class="card__repeat-day" for="repeat-we-4"
-                >we</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-th-4"
-                  name="repeat"
-                  value="th"
-                />
-                <label class="card__repeat-day" for="repeat-th-4"
-                >th</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-fr-4"
-                  name="repeat"
-                  value="fr"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-fr-4"
-                >fr</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  name="repeat"
-                  value="sa"
-                  id="repeat-sa-4"
-                />
-                <label class="card__repeat-day" for="repeat-sa-4"
-                >sa</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-su-4"
-                  name="repeat"
-                  value="su"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-su-4"
-                >su</label
-                >
+                ${Array.from(this._repeatingDays.entries()).map(([day, isRepeating]) => `<input
+                  class="visually-hidden card__repeat-day-input" type="checkbox" name="repeat"
+                  id="repeat-${day}-4" value="${day}"
+                  ${isRepeating ? `checked` : ``}/>
+                  <label class="card__repeat-day" for="repeat-${day}-4">${day}</label>`.trim()).join(``) }
               </div>
             </fieldset>
           </div>

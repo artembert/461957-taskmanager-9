@@ -10,7 +10,7 @@ const MAX_TAGS_COUNT = 3;
 const dateNow = Date.now();
 const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 const descriptions = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
-const days = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
+const days = [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`];
 
 const getTask = () => ({
   description: getRandomDescription(descriptions),
@@ -44,9 +44,9 @@ function getDueDate(currentDate) {
 
 function getRepeatingDays(dayList) {
   return dayList.reduce((week, day) => {
-    week[day] = getBooleanGivenProbability(0.15);
+    week.set(day, getBooleanGivenProbability(0.15));
     return week;
-  }, {});
+  }, new Map());
 }
 
 function getRandomTags(tagList) {
