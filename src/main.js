@@ -1,5 +1,5 @@
 import {createSiteMenuTemplate} from './components/site-menu';
-import {createSearchTemplate} from './components/search';
+import Search from './components/search';
 import Filter from './components/filter';
 import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
@@ -17,7 +17,7 @@ function renderPage() {
   const siteHeaderElement = document.querySelector(`.main__control`);
 
   render(createSiteMenuTemplate(), siteHeaderElement);
-  render(createSearchTemplate(), siteMainElement);
+  renderSearch(undefined, siteMainElement);
   renderFilter((getFilters()), siteMainElement);
   render(createBoardTemplate(), siteMainElement);
 
@@ -62,6 +62,13 @@ function renderTask(taskData, container) {
 function renderTaskEdit(taskData, container) {
   const taskEdit = new TaskEdit(taskData);
   render(taskEdit.getTemplate(), container);
+}
+
+// предусмотрена возможность пробарсывать данные в компонент.
+// Засчет одинакового количества и порядка аргументов достигается единообразность функций renderComponent
+function renderSearch(searchData, container) {
+  const search = new Search(searchData);
+  render(search.getTemplate(), container);
 }
 
 renderPage();
