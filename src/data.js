@@ -25,13 +25,13 @@ const getTask = () => ({
 export const tasksData = new Array(TASK_COUNT).fill(undefined).map(() => getTask());
 
 export const getFilters = () => [
-  {title: `all`, count: tasksData.length},
-  {title: `overdue`, count: getOverdueTaskCount(tasksData, dateNow)},
-  {title: `today`, count: getTodayTaskCount(tasksData, dateNow)},
-  {title: `favourites`, count: getFavouritesTaskCount(tasksData)},
-  {title: `repeating`, count: getRepeatingTaskCount(tasksData)},
-  {title: `tags`, count: getTaggedTaskCount(tasksData)},
-  {title: `archive`, count: getArchiveTaskCount(tasksData)},
+  {title: `all`, count: tasksData.length, isActive: true},
+  {title: `overdue`, count: getOverdueTaskCount(tasksData, dateNow), isActive: false},
+  {title: `today`, count: getTodayTaskCount(tasksData, dateNow), isActive: false},
+  {title: `favourites`, count: getFavouritesTaskCount(tasksData), isActive: false},
+  {title: `repeating`, count: getRepeatingTaskCount(tasksData), isActive: false},
+  {title: `tags`, count: getTaggedTaskCount(tasksData), isActive: false},
+  {title: `archive`, count: getArchiveTaskCount(tasksData), isActive: false},
 ];
 
 function getRandomDescription(descriptionList) {

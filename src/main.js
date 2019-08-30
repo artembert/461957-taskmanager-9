@@ -1,6 +1,6 @@
 import {createSiteMenuTemplate} from './components/site-menu';
 import {createSearchTemplate} from './components/search';
-import {createFilterTemplate} from './components/filter';
+import Filter from './components/filter';
 import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import TaskEdit from './components/task-edit';
@@ -18,7 +18,7 @@ function renderPage() {
 
   render(createSiteMenuTemplate(), siteHeaderElement);
   render(createSearchTemplate(), siteMainElement);
-  render(createFilterTemplate(getFilters()), siteMainElement);
+  renderFilter((getFilters()), siteMainElement);
   render(createBoardTemplate(), siteMainElement);
 
   const boardElement = document.querySelector(`.board`);
@@ -27,7 +27,7 @@ function renderPage() {
   render(createLoadMoreButtonTemplate(), boardElement);
   renderTaskEdit(tasksData[0], taskListElement);
   renderTasksCount++;
-  
+
   tasksData
     .slice(1, TASK_ON_PAGE)
     .forEach((task) => {
@@ -47,6 +47,11 @@ function renderPage() {
     //   loadMoreButton.remove();
     // }
   }
+}
+
+function renderFilter(filterData, container) {
+  const filter = new Filter(filterData);
+  render(filter.getTemplate(), container);
 }
 
 function renderTask(taskData, container) {
