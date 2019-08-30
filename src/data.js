@@ -42,6 +42,14 @@ export function getMenu() {
   ];
 }
 
+export function getSortToggles() {
+  return [
+    {title: `SORT BY DEFAULT`, type: `default`, isActive: true},
+    {title: `SORT BY DATE up`, type: `date-up`, isActive: false},
+    {title: `SORT BY DATE down`, type: `date-down`, isActive: false},
+  ];
+}
+
 function getRandomDescription(descriptionList) {
   return descriptionList[getRandomInteger(0, descriptionList.length)];
 }

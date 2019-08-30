@@ -1,12 +1,18 @@
-export const createBoardTemplate = () => {
-  return `<section class="board container">
-  <div class="board__filter-list">
-    <a href="#" class="board__filter">SORT BY DEFAULT</a>
-    <a href="#" class="board__filter">SORT BY DATE up</a>
-    <a href="#" class="board__filter">SORT BY DATE down</a>
-  </div>
+import {BaseComponent} from "./base-component";
 
-  <div class="board__tasks">
-  </div>
-</section>`;
-};
+export default class Board extends BaseComponent {
+  constructor(sortToggles) {
+    super();
+    this._sortTogglers = sortToggles;
+  }
+
+  getTemplate() {
+    return `<section class="board container">
+    <div class="board__filter-list">
+      ${this._sortTogglers.map((item) => `<a href="#" class="board__filter"
+        data-sort-type="${item.type}">${item.title}</a>`.trim()).join(``)}
+    </div> 
+    <div class="board__tasks"></div>
+    </section>`.trim();
+  }
+}

@@ -1,10 +1,10 @@
 import Menu from './components/menu';
 import Search from './components/search';
 import Filter from './components/filter';
-import {createBoardTemplate} from './components/board';
+import Board from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 import TaskEdit from './components/task-edit';
-import {getFilters, getMenu, tasksData} from "./data";
+import {getFilters, getMenu, getSortToggles, tasksData} from "./data";
 import {render} from "./util/dom";
 import Task from "./components/task";
 
@@ -17,9 +17,12 @@ function renderPage() {
   const siteHeaderElement = document.querySelector(`.main__control`);
 
   renderMenu(getMenu(), siteHeaderElement);
+
+  // предусмотрена возможность пробарсывать данные в компонент.
+  // За счет одинакового количества и порядка аргументов достигается единообразность функций renderComponent
   renderSearch(undefined, siteMainElement);
   renderFilter((getFilters()), siteMainElement);
-  render(createBoardTemplate(), siteMainElement);
+  renderBoard(getSortToggles(), siteMainElement);
 
   const boardElement = document.querySelector(`.board`);
   const taskListElement = document.querySelector(`.board__tasks`);
@@ -64,8 +67,6 @@ function renderTaskEdit(taskData, container) {
   render(taskEdit.getTemplate(), container);
 }
 
-// предусмотрена возможность пробарсывать данные в компонент.
-// Засчет одинакового количества и порядка аргументов достигается единообразность функций renderComponent
 function renderSearch(searchData, container) {
   const search = new Search(searchData);
   render(search.getTemplate(), container);
@@ -74,6 +75,11 @@ function renderSearch(searchData, container) {
 function renderMenu(menuData, container) {
   const menu = new Menu(menuData);
   render(menu.getTemplate(), container);
+}
+
+function renderBoard(sortToggles, container) {
+  const board = new Board(sortToggles);
+  render(board.getTemplate(), container);
 }
 
 renderPage();
