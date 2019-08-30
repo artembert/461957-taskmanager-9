@@ -3,15 +3,16 @@ import {createSearchTemplate} from './components/search';
 import {createFilterTemplate} from './components/filter';
 import {createBoardTemplate} from './components/board';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
-import {createTaskTemplate} from './components/task';
+import {Task} from './components/task';
 import {createTaskEditTemplate} from './components/task-edit';
 import {colors, getFilters, tasksData} from "./data";
 import {render} from "./util/dom";
 
 const TASK_ON_PAGE = 8;
+
 let renderTasksCount;
 
-const renderPage = () => {
+function renderPage() {
   const siteMainElement = document.querySelector(`main`);
   const siteHeaderElement = document.querySelector(`.main__control`);
 
@@ -27,21 +28,28 @@ const renderPage = () => {
   render(createTaskEditTemplate(tasksData[0], colors), taskListElement);
   tasksData
     .slice(1, TASK_ON_PAGE)
-    .forEach((task) => render(createTaskTemplate(task), taskListElement));
-  renderTasksCount = TASK_ON_PAGE;
+    .forEach((task) => {
+      renderTask(task, taskListElement);
+      renderTasksCount++;
+    });
 
   const loadMoreButton = document.querySelector(`.load-more`);
   loadMoreButton.addEventListener(`click`, onLoadMoreTasks);
 
   function onLoadMoreTasks() {
-    tasksData
-      .slice(renderTasksCount, renderTasksCount + TASK_ON_PAGE)
-      .forEach((task) => render(createTaskTemplate(task), taskListElement));
-    renderTasksCount += TASK_ON_PAGE;
-    if (renderTasksCount > tasksData.length) {
-      loadMoreButton.remove();
-    }
+    // tasksData
+    //   .slice(renderTasksCount, renderTasksCount + TASK_ON_PAGE)
+    //   .forEach((task) => render(createTaskTemplate(task), taskListElement));
+    // renderTasksCount += TASK_ON_PAGE;
+    // if (renderTasksCount > tasksData.length) {
+    //   loadMoreButton.remove();
+    // }
   }
-};
+}
+
+function renderTask(taskData, container) {
+  const task = new Task(taskData);
+  render(task.getTemplate(), container);
+}
 
 renderPage();
