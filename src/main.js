@@ -50,7 +50,44 @@ function renderFilter(filterData, container) {
 
 function renderTask(taskData, container) {
   const task = new Task(taskData);
+  const taskEdit = new TaskEdit(taskData);
+
+  task.getElement()
+  .querySelector(`.card__btn--edit`)
+  .addEventListener(`click`, () => {
+    container.replaceChild(taskEdit.getElement(), task.getElement());
+    document.addEventListener(`keydown`, onKeyDown);
+  });
+
+  taskEdit.getElement()
+  .querySelector(`textarea`)
+  .addEventListener(`focus`, () => {
+    document.removeEventListener(`keydown`, onKeyDown);
+  });
+
+  taskEdit.getElement()
+  .querySelector(`textarea`)
+  .addEventListener(`blur`, () => {
+    document.addEventListener(`keydown`, onKeyDown);
+  });
+
+  taskEdit.getElement()
+  .querySelector(`.card__save`)
+  .addEventListener(`click`, onSaveCard);
+
   render(task.getElement(), container);
+
+  function onKeyDown(evt) {
+    if (evt.code === `Esc` || evt.code === `Escape`) {
+      container.replaceChild(task.getElement(), taskEdit.getElement());
+      document.removeEventListener(`keydown`, onKeyDown);
+    }
+  }
+
+  function onSaveCard() {
+    container.replaceChild(task.getElement(), taskEdit.getElement());
+    document.removeEventListener(`keydown`, onKeyDown);
+  }
 }
 
 function renderTaskEdit(taskData, container) {
