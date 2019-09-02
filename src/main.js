@@ -5,20 +5,18 @@ import Board from './components/board';
 import LoadMoreButton from './components/load-more-button';
 import TaskEdit from './components/task-edit';
 import {getFilters, getMenu, getSortToggles, tasksData} from "./data";
-import {render} from "./util/dom";
+import {render, unrender} from "./util/dom";
 import Task from "./components/task";
 
 const TASK_ON_PAGE = 8;
 
-// let renderTasksCount;
-// let boardEl;
-// let taskListEl;
-// let loadMoreButton;
+let renderTasksCount = 0;
+let boardEl;
+let taskListEl;
 
 renderPage();
 
 function renderPage() {
-  let renderTasksCount;
   const siteMainElement = document.querySelector(`main`);
   const siteHeaderElement = document.querySelector(`.main__control`);
 
@@ -30,20 +28,19 @@ function renderPage() {
   renderFilter((getFilters()), siteMainElement);
   renderBoard(getSortToggles(), siteMainElement);
 
-  const boardEl = document.querySelector(`.board`);
-  const taskListEl = document.querySelector(`.board__tasks`);
+  boardEl = document.querySelector(`.board`);
+  taskListEl = document.querySelector(`.board__tasks`);
 
-  debugger;
   renderLoadMoreButton(undefined, boardEl);
   renderTaskEdit(tasksData[0], taskListEl);
   renderTasksCount++;
 
   tasksData
-    .slice(1, TASK_ON_PAGE)
-    .forEach((task) => {
-      renderTask(task, taskListEl);
-      renderTasksCount++;
-    });
+  .slice(1, TASK_ON_PAGE)
+  .forEach((task) => {
+    renderTask(task, taskListEl);
+    renderTasksCount++;
+  });
 }
 
 function renderFilter(filterData, container) {
@@ -79,19 +76,14 @@ function renderBoard(sortToggles, container) {
 function renderLoadMoreButton(data, container) {
   const button = new LoadMoreButton(data);
   render(button.getElement(), container);
-  console.log(button.getElement());
-  button.getElement().addEventListener('click', (evt) => {
-    console.log("more!")
-  });
-}
-
-const onLoadMoreTasks = function ({renderTasksCount, }, ) {
-  tasksData
+  button.getElement().addEventListener(`click`, () => {
+    tasksData
     .slice(renderTasksCount, renderTasksCount + TASK_ON_PAGE)
     .forEach((task) => renderTask(task, taskListEl));
-  renderTasksCount += TASK_ON_PAGE;
-  if (renderTasksCount > tasksData.length) {
-    loadMoreButton.remove();
-  }
-};
-
+    renderTasksCount += TASK_ON_PAGE;
+    if (renderTasksCount > tasksData.length) {
+      unrender(button.getElement());
+    }
+  });
+  return button;
+}
