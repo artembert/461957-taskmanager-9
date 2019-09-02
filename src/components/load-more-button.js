@@ -6,6 +6,6 @@ export default class LoadMoreButton extends BaseComponent {
   }
 
   getTemplate() {
-    return `<button class="load-more" type="button">load more</button>`
+    return `<button class="load-more" type="button">load more</button>`;
   }
 }

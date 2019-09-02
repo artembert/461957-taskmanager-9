@@ -33,6 +33,7 @@ function renderPage() {
   const boardEl = document.querySelector(`.board`);
   const taskListEl = document.querySelector(`.board__tasks`);
 
+  debugger;
   renderLoadMoreButton(undefined, boardEl);
   renderTaskEdit(tasksData[0], taskListEl);
   renderTasksCount++;
@@ -43,45 +44,45 @@ function renderPage() {
       renderTask(task, taskListEl);
       renderTasksCount++;
     });
-
-  const loadMoreButton = document.querySelector(`.load-more`);
-  loadMoreButton.addEventListener(`click`, onLoadMoreTasks);
 }
 
 function renderFilter(filterData, container) {
   const filter = new Filter(filterData);
-  render(filter.getTemplate(), container);
+  render(filter.getElement(), container);
 }
 
 function renderTask(taskData, container) {
   const task = new Task(taskData);
-  render(task.getTemplate(), container);
+  render(task.getElement(), container);
 }
 
 function renderTaskEdit(taskData, container) {
   const taskEdit = new TaskEdit(taskData);
-  render(taskEdit.getTemplate(), container);
+  render(taskEdit.getElement(), container);
 }
 
 function renderSearch(searchData, container) {
   const search = new Search(searchData);
-  render(search.getTemplate(), container);
+  render(search.getElement(), container);
 }
 
 function renderMenu(menuData, container) {
   const menu = new Menu(menuData);
-  render(menu.getTemplate(), container);
+  render(menu.getElement(), container);
 }
 
 function renderBoard(sortToggles, container) {
   const board = new Board(sortToggles);
-  render(board.getTemplate(), container);
+  render(board.getElement(), container);
 }
 
 function renderLoadMoreButton(data, container) {
   const button = new LoadMoreButton(data);
-  render(button.getTemplate(), container);
-  button.getElement().addEventListener(`click`, onLoadMoreTasks.bind(null,  ));
+  render(button.getElement(), container);
+  console.log(button.getElement());
+  button.getElement().addEventListener('click', (evt) => {
+    console.log("more!")
+  });
 }
 
 const onLoadMoreTasks = function ({renderTasksCount, }, ) {

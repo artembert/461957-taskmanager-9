@@ -1,7 +1,14 @@
 import {Position} from "../models/position";
 
 export function render(markup, container, place = Position.BEFOREEND) {
-  container.insertAdjacentHTML(place, markup);
+  switch (place) {
+    case Position.BEFOREEND:
+      container.append(markup);
+      break;
+    case Position.AFTERBEGIN:
+      container.prepend(markup);
+      break;
+  }
 }
 
 export function createElement(template) {
