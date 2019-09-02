@@ -32,11 +32,9 @@ function renderPage() {
   taskListEl = document.querySelector(`.board__tasks`);
 
   renderLoadMoreButton(undefined, boardEl);
-  renderTaskEdit(tasksData[0], taskListEl);
-  renderTasksCount++;
 
   tasksData
-  .slice(1, TASK_ON_PAGE)
+  .slice(0, TASK_ON_PAGE)
   .forEach((task) => {
     renderTask(task, taskListEl);
     renderTasksCount++;
