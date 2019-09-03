@@ -1,4 +1,4 @@
-import {BaseComponent} from "./base-component";
+import BaseComponent from "./base-component";
 
 export default class Filter extends BaseComponent {
   constructor(filters) {

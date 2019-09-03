@@ -1,6 +1,6 @@
 import Task from "./task";
 import {colors} from "../models/colors";
-import {TagsEdit} from "./tags-edit";
+import TagsEdit from "./tags-edit";
 
 export default class TaskEdit extends Task {
   constructor(...args) {
