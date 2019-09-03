@@ -1,9 +1,11 @@
 import Task from "./task";
 import {colors} from "../models/colors";
+import {TagsEdit} from "./tags-edit";
 
 export default class TaskEdit extends Task {
   constructor(...args) {
     super(...args);
+    this._tagsEditMarkup = new TagsEdit(Array.from(this._tags)).getTemplate();
   }
 
   getTemplate() {
@@ -72,12 +74,7 @@ export default class TaskEdit extends Task {
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              ${Array.from(this._tags).map((tag) => `<span class="card__hashtag-inner">
-                <span class="card__hashtag-inner">
-                  <input type="hidden" name="hashtag" value="${tag}" class="card__hashtag-hidden-input"/>
-                  <p class="card__hashtag-name">#${tag}</p>
-                  <button type="button" class="card__hashtag-delete">delete</button>
-                </span>`).join(``)}
+              ${this._tagsEditMarkup}
             </div>
 
             <label>
