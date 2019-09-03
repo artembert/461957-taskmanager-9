@@ -1,6 +1,16 @@
-export const createTaskEditTemplate = (task, colors) => {
-  return `<article class="card card--${task.color} card--edit
-    ${Object.values(task.repeatingDays).some((value) => value) ? `card--repeat` : ``}">
+import Task from "./task";
+import {colors} from "../models/colors";
+import {TagsEdit} from "./tags-edit";
+
+export default class TaskEdit extends Task {
+  constructor(...args) {
+    super(...args);
+    this._tagListMarkup = new TagsEdit(Array.from(this._tags)).getTemplate();
+  }
+
+  getTemplate() {
+    return `<article
+    class="card card--${this._color} card--edit ${this._repeatClassName}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -23,11 +33,8 @@ export const createTaskEditTemplate = (task, colors) => {
 
       <div class="card__textarea-wrap">
         <label>
-                    <textarea
-                      class="card__text"
-                      placeholder="Start typing your text here..."
-                      name="text"
-                    >${task.description}</textarea>
+          <textarea
+            class="card__text" placeholder="Start typing your text here..." name="text">${this._description}</textarea>
         </label>
       </div>
 
@@ -56,138 +63,22 @@ export const createTaskEditTemplate = (task, colors) => {
 
             <fieldset class="card__repeat-days">
               <div class="card__repeat-days-inner">
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-mo-4"
-                  name="repeat"
-                  value="mo"
-                />
-                <label class="card__repeat-day" for="repeat-mo-4"
-                >mo</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-tu-4"
-                  name="repeat"
-                  value="tu"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-tu-4"
-                >tu</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-we-4"
-                  name="repeat"
-                  value="we"
-                />
-                <label class="card__repeat-day" for="repeat-we-4"
-                >we</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-th-4"
-                  name="repeat"
-                  value="th"
-                />
-                <label class="card__repeat-day" for="repeat-th-4"
-                >th</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-fr-4"
-                  name="repeat"
-                  value="fr"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-fr-4"
-                >fr</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  name="repeat"
-                  value="sa"
-                  id="repeat-sa-4"
-                />
-                <label class="card__repeat-day" for="repeat-sa-4"
-                >sa</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-su-4"
-                  name="repeat"
-                  value="su"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-su-4"
-                >su</label
-                >
+                ${Array.from(this._repeatingDays.entries()).map(([day, isRepeating]) => `<input
+                  class="visually-hidden card__repeat-day-input" type="checkbox" name="repeat"
+                  id="repeat-${day}-4" value="${day}"
+                  ${isRepeating ? `checked` : ``}/>
+                  <label class="card__repeat-day" for="repeat-${day}-4">${day}</label>`).join(``) }
               </div>
             </fieldset>
           </div>
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-                        <span class="card__hashtag-inner">
-                          <input
-                            type="hidden"
-                            name="hashtag"
-                            value="repeat"
-                            class="card__hashtag-hidden-input"
-                          />
-                          <p class="card__hashtag-name">
-                            #repeat
-                          </p>
-                          <button type="button" class="card__hashtag-delete">
-                            delete
-                          </button>
-                        </span>
-
-              <span class="card__hashtag-inner">
-                          <input
-                            type="hidden"
-                            name="hashtag"
-                            value="repeat"
-                            class="card__hashtag-hidden-input"
-                          />
-                          <p class="card__hashtag-name">
-                            #cinema
-                          </p>
-                          <button type="button" class="card__hashtag-delete">
-                            delete
-                          </button>
-                        </span>
-
-              <span class="card__hashtag-inner">
-                          <input
-                            type="hidden"
-                            name="hashtag"
-                            value="repeat"
-                            class="card__hashtag-hidden-input"
-                          />
-                          <p class="card__hashtag-name">
-                            #entertaiment
-                          </p>
-                          <button type="button" class="card__hashtag-delete">
-                            delete
-                          </button>
-                        </span>
+              ${this._tagListMarkup}
             </div>
 
             <label>
-              <input
-                type="text"
-                class="card__hashtag-input"
-                name="hashtag-input"
-                placeholder="Type new hashtag here"
-              />
+              <input type="text" class="card__hashtag-input" name="hashtag-input" placeholder="Type new hashtag here"/>
             </label>
           </div>
         </div>
@@ -217,4 +108,6 @@ export const createTaskEditTemplate = (task, colors) => {
     </div>
   </form>
 </article>`;
-};
+  }
+}
+
