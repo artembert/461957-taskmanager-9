@@ -63,7 +63,7 @@ export default class Task extends BaseComponent {
       </div>
     </div>
   </div>
-</article>`.trim();
+</article>`;
   }
 }
 

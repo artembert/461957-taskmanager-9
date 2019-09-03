@@ -13,7 +13,7 @@ export default class Menu extends BaseComponent {
         ${item.isActive ? `checked` : ``}/>
       <label for="control__${item.id}"
       class="control__label ${item.additionalClassName ? `control__label--${item.additionalClassName}` : ``}"
-        >${item.title}</label>`.trim()).join(``)}
-    </section>`.trim();
+        >${item.title}</label>`).join(``)}
+    </section>`;
   }
 }

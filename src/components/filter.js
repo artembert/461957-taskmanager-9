@@ -14,6 +14,6 @@ export default class Filter extends BaseComponent {
       <label for="filter__${filter.title}" class="filter__label">
           ${filter.title} <span class="filter__${filter.title}-count">${filter.count}</span>
       </label>`).join(``)}
-    </section>`.trim();
+    </section>`;
   }
 }

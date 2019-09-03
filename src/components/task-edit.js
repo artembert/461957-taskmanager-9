@@ -66,7 +66,7 @@ export default class TaskEdit extends Task {
                   class="visually-hidden card__repeat-day-input" type="checkbox" name="repeat"
                   id="repeat-${day}-4" value="${day}"
                   ${isRepeating ? `checked` : ``}/>
-                  <label class="card__repeat-day" for="repeat-${day}-4">${day}</label>`.trim()).join(``) }
+                  <label class="card__repeat-day" for="repeat-${day}-4">${day}</label>`).join(``) }
               </div>
             </fieldset>
           </div>
@@ -78,7 +78,7 @@ export default class TaskEdit extends Task {
                   <input type="hidden" name="hashtag" value="${tag}" class="card__hashtag-hidden-input"/>
                   <p class="card__hashtag-name">#${tag}</p>
                   <button type="button" class="card__hashtag-delete">delete</button>
-                </span>`.trim()).join(``)}
+                </span>`).join(``)}
             </div>
 
             <label>
@@ -101,7 +101,7 @@ export default class TaskEdit extends Task {
               for="color-${color}-4"
               class="card__color card__color--${color}"
             >${color}</label
-            >`.trim()).join(``)}
+            >`).join(``)}
         </div>
       </div>
 
@@ -111,7 +111,7 @@ export default class TaskEdit extends Task {
       </div>
     </div>
   </form>
-</article>`.trim();
+</article>`;
   }
 }
 
