@@ -1,6 +1,5 @@
 import Task from "./task";
 import {colors} from "../models/colors";
-import {isTaskRepeating} from "../util/is-task-repeating";
 
 export default class TaskEdit extends Task {
   constructor(...args) {
@@ -9,7 +8,7 @@ export default class TaskEdit extends Task {
 
   getTemplate() {
     return `<article
-    class="card card--${this._color} card--edit ${isTaskRepeating(this._repeatingDays) ? `card--repeat` : ``}">
+    class="card card--${this._color} card--edit ${this._repeatClassName}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">

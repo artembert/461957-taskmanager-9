@@ -10,11 +10,11 @@ export default class Task extends BaseComponent {
     this._repeatingDays = repeatingDays;
     this._tags = tags;
     this._color = color;
-    this._element = null;
+    this._repeatClassName = isTaskRepeating(this._repeatingDays) ? `card--repeat` : ``;
   }
 
   getTemplate() {
-    return `<article class="card card--${this._color} ${isTaskRepeating(this._repeatingDays) ? `card--repeat` : ``}">
+    return `<article class="card card--${this._color} ${this._repeatClassName}">
   <div class="card__form">
     <div class="card__inner">
       <div class="card__control">
