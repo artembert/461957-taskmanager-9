@@ -1,6 +1,6 @@
 import {createElement} from "../util/dom";
 
-export class BaseComponent {
+export default class BaseComponent {
   constructor() {
     if (new.target === BaseComponent) {
       throw new Error(`Can't instantiate BaseComponent, only inherit from it.`);

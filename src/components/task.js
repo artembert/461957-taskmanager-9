@@ -1,7 +1,7 @@
 import {isTaskRepeating} from "../util/is-task-repeating";
 import {format} from "date-fns";
-import {BaseComponent} from "./base-component";
-import {Tags} from "./tags";
+import BaseComponent from "./base-component";
+import Tags from "./tags";
 
 export default class Task extends BaseComponent {
   constructor({description, dueDate, repeatingDays, tags, color}) {
