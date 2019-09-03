@@ -5,7 +5,7 @@ import {TagsEdit} from "./tags-edit";
 export default class TaskEdit extends Task {
   constructor(...args) {
     super(...args);
-    this._tagsEditMarkup = new TagsEdit(Array.from(this._tags)).getTemplate();
+    this._tagListMarkup = new TagsEdit(Array.from(this._tags)).getTemplate();
   }
 
   getTemplate() {
@@ -74,7 +74,7 @@ export default class TaskEdit extends Task {
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              ${this._tagsEditMarkup}
+              ${this._tagListMarkup}
             </div>
 
             <label>

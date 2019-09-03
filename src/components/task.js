@@ -1,6 +1,7 @@
 import {isTaskRepeating} from "../util/is-task-repeating";
 import {format} from "date-fns";
 import {BaseComponent} from "./base-component";
+import {Tags} from "./tags";
 
 export default class Task extends BaseComponent {
   constructor({description, dueDate, repeatingDays, tags, color}) {
@@ -11,6 +12,7 @@ export default class Task extends BaseComponent {
     this._tags = tags;
     this._color = color;
     this._repeatClassName = isTaskRepeating(this._repeatingDays) ? `card--repeat` : ``;
+    this._tagListMarkup = new Tags(Array.from(this._tags)).getTemplate();
   }
 
   getTemplate() {
@@ -52,11 +54,7 @@ export default class Task extends BaseComponent {
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-            ${Array.from(this._tags).map((tag) => `<span class="card__hashtag-inner">
-                <span class="card__hashtag-name">
-                  #${tag}
-                </span>
-              </span>`).join(``)}
+            ${this._tagListMarkup}
             </div>
           </div>
         </div>
