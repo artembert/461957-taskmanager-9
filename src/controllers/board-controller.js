@@ -7,6 +7,9 @@ import TaskEdit from "../components/task-edit";
 import {getSortToggles, tasksData} from "../data";
 import Sort from "../components/sort";
 import LoadMoreButton from "../components/load-more-button";
+import {SortType} from "../models/sort-type";
+
+const filterLinkClassName = `board__filter`;
 
 export default class BoardController {
   constructor(container, tasks, tasksOnScreenCount) {
@@ -18,6 +21,7 @@ export default class BoardController {
     this._taskList = new TaskList();
     this._taskListEmpty = new TaskListEmpty();
     this._renderTasksCount = tasksOnScreenCount;
+    this._currentSortState = SortType.DEFAULT;
   }
 
   init() {
@@ -26,6 +30,7 @@ export default class BoardController {
       render(this._taskListEmpty.getElement(), this._board.getElement());
     } else {
       render(this._sort.getElement(), this._board.getElement());
+      this._sort.getElement().addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
       render(this._taskList.getElement(), this._board.getElement());
       this._tasks
         .slice(0, this._renderTasksCount)
@@ -76,7 +81,6 @@ export default class BoardController {
     render(task.getElement(), this._taskList.getElement());
   }
 
-
   _renderLoadMoreButton() {
     const button = new LoadMoreButton();
     render(button.getElement(), this._board.getElement());
@@ -93,4 +97,36 @@ export default class BoardController {
     });
   }
 
+  _onSortLinkClick(evt) {
+    evt.preventDefault();
+    if (!evt.target.classList.contains(filterLinkClassName)) {
+      return;
+    }
+    if (evt.target.dataset.sortType === this._currentSortState) {
+      return;
+    }
+    this._currentSortState = evt.target.dataset.sortType;
+    this._taskList.getElement().innerHTML = ``;
+    switch (this._currentSortState) {
+      case SortType.DATE_UP:
+        this._tasks
+          .slice()
+          .sort((a, b) => a.dueDate - b.dueDate)
+          .slice(0, this._renderTasksCount)
+          .forEach((taskData) => this._renderTask(taskData));
+        break;
+      case SortType.DATE_DOWN:
+        this._tasks
+          .slice()
+          .sort((a, b) => b.dueDate - a.dueDate)
+          .slice(0, this._renderTasksCount)
+          .forEach((taskData) => this._renderTask(taskData));
+        break;
+      default:
+        this._tasks
+          .slice(0, this._renderTasksCount)
+          .forEach((taskData) => this._renderTask(taskData));
+        break;
+    }
+  }
 }
