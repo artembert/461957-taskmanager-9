@@ -1,11 +1,13 @@
 import Task from "./task";
 import {colors} from "../models/colors";
 import TagsEdit from "./tags-edit";
+import DaysEdit from "./days-edit";
 
 export default class TaskEdit extends Task {
   constructor(...args) {
     super(...args);
     this._tagListMarkup = new TagsEdit(Array.from(this._tags)).getTemplate();
+    this._daysMarkup = new DaysEdit(Array.from(this._repeatingDays.entries())).getTemplate();
   }
 
   getTemplate() {
@@ -63,11 +65,7 @@ export default class TaskEdit extends Task {
 
             <fieldset class="card__repeat-days">
               <div class="card__repeat-days-inner">
-                ${Array.from(this._repeatingDays.entries()).map(([day, isRepeating]) => `<input
-                  class="visually-hidden card__repeat-day-input" type="checkbox" name="repeat"
-                  id="repeat-${day}-4" value="${day}"
-                  ${isRepeating ? `checked` : ``}/>
-                  <label class="card__repeat-day" for="repeat-${day}-4">${day}</label>`).join(``) }
+                ${this._daysMarkup}
               </div>
             </fieldset>
           </div>
