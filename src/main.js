@@ -1,24 +1,17 @@
 import Menu from './components/menu';
 import Search from './components/search';
 import Filter from './components/filter';
-import Board from './components/board';
-import LoadMoreButton from './components/load-more-button';
 import {getFilters, getMenu, tasksData} from "./data";
-import {render, unrender} from "./util/dom";
+import {render} from "./util/dom";
 import BoardController from "./controllers/board-controller";
 
-const TASK_ON_PAGE = 8;
-
-let renderTasksCount = 0;
-let boardEl;
-let taskListEl;
+const TASKS_ON_PAGE_COUNT = 8;
 
 renderPage();
 
 function renderPage() {
   const siteMainElement = document.querySelector(`main`);
   const siteHeaderElement = document.querySelector(`.main__control`);
-  const boardController = new BoardController(siteMainElement, tasksData);
 
   renderMenu(getMenu(), siteHeaderElement);
 
@@ -26,22 +19,8 @@ function renderPage() {
   // За счет одинакового количества и порядка аргументов достигается единообразность функций renderComponent
   renderSearch(undefined, siteMainElement);
   renderFilter((getFilters()), siteMainElement);
-  // renderBoard(getSortToggles(), siteMainElement);
-
-  // boardEl = document.querySelector(`.board`);
-  // taskListEl = document.querySelector(`.board__tasks`);
-
-  // renderLoadMoreButton(undefined, boardEl);
-  boardController.init();
-  // tasksData
-  // .slice(0, TASK_ON_PAGE)
-  // .forEach((task) => {
-  //   renderTask(task, taskListEl);
-  //   renderTasksCount++;
-  // });
+  renderBoard(tasksData, siteMainElement);
 }
-
-// TODO: create LoadMore() Fn
 
 function renderFilter(filterData, container) {
   const filter = new Filter(filterData);
@@ -58,22 +37,7 @@ function renderMenu(menuData, container) {
   render(menu.getElement(), container);
 }
 
-function renderBoard(sortToggles, container) {
-  const board = new Board();
-  render(board.getElement(), container);
-}
-
-function renderLoadMoreButton(data, container) {
-  const button = new LoadMoreButton(data);
-  render(button.getElement(), container);
-  button.getElement().addEventListener(`click`, () => {
-    tasksData
-    .slice(renderTasksCount, renderTasksCount + TASK_ON_PAGE)
-    .forEach((task) => renderTask(task, taskListEl));
-    renderTasksCount += TASK_ON_PAGE;
-    if (renderTasksCount > tasksData.length) {
-      unrender(button.getElement());
-    }
-  });
-  return button;
+function renderBoard(tasks, container) {
+  const boardController = new BoardController(container, tasks, TASKS_ON_PAGE_COUNT);
+  boardController.init();
 }

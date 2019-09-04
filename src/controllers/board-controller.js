@@ -1,20 +1,23 @@
 import TaskList from "../components/task-list";
 import Board from "../components/board";
 import TaskListEmpty from "../components/task-list-empty";
-import {render} from "../util/dom";
+import {render, unrender} from "../util/dom";
 import Task from "../components/task";
 import TaskEdit from "../components/task-edit";
-import {getSortToggles} from "../data";
+import {getSortToggles, tasksData} from "../data";
 import Sort from "../components/sort";
+import LoadMoreButton from "../components/load-more-button";
 
 export default class BoardController {
-  constructor(container, tasks) {
+  constructor(container, tasks, tasksOnScreenCount) {
     this._container = container;
     this._tasks = tasks;
+    this._tasksOnScreenCount = tasksOnScreenCount;
     this._board = new Board();
     this._sort = new Sort(getSortToggles());
     this._taskList = new TaskList();
     this._taskListEmpty = new TaskListEmpty();
+    this._renderTasksCount = tasksOnScreenCount;
   }
 
   init() {
@@ -24,7 +27,10 @@ export default class BoardController {
     } else {
       render(this._sort.getElement(), this._board.getElement());
       render(this._taskList.getElement(), this._board.getElement());
-      this._tasks.forEach((taskData) => this._renderTask(taskData));
+      this._tasks
+        .slice(0, this._renderTasksCount)
+        .forEach((taskData) => this._renderTask(taskData));
+      this._renderLoadMoreButton();
     }
   }
 
@@ -45,28 +51,46 @@ export default class BoardController {
     };
 
     task.getElement()
-    .querySelector(`.card__btn--edit`)
-    .addEventListener(`click`, () => {
-      this._taskList.getElement().replaceChild(taskEdit.getElement(), task.getElement());
-      document.addEventListener(`keydown`, onKeyDown);
-    });
+      .querySelector(`.card__btn--edit`)
+      .addEventListener(`click`, () => {
+        this._taskList.getElement().replaceChild(taskEdit.getElement(), task.getElement());
+        document.addEventListener(`keydown`, onKeyDown);
+      });
 
     taskEdit.getElement()
-    .querySelector(`textarea`)
-    .addEventListener(`focus`, () => {
-      document.removeEventListener(`keydown`, onKeyDown);
-    });
+      .querySelector(`textarea`)
+      .addEventListener(`focus`, () => {
+        document.removeEventListener(`keydown`, onKeyDown);
+      });
 
     taskEdit.getElement()
-    .querySelector(`textarea`)
-    .addEventListener(`blur`, () => {
-      document.addEventListener(`keydown`, onKeyDown);
-    });
+      .querySelector(`textarea`)
+      .addEventListener(`blur`, () => {
+        document.addEventListener(`keydown`, onKeyDown);
+      });
 
     taskEdit.getElement()
-    .querySelector(`.card__save`)
-    .addEventListener(`click`, onSaveCard);
+      .querySelector(`.card__save`)
+      .addEventListener(`click`, onSaveCard);
 
     render(task.getElement(), this._taskList.getElement());
   }
+
+
+  _renderLoadMoreButton() {
+    const button = new LoadMoreButton();
+    render(button.getElement(), this._board.getElement());
+    button.getElement().addEventListener(`click`, () => {
+      this._tasks
+        .slice(this._renderTasksCount, this._renderTasksCount + this._tasksOnScreenCount)
+        .forEach((taskData) => {
+          this._renderTask(taskData);
+          this._renderTasksCount++;
+        });
+      if (this._renderTasksCount >= tasksData.length) {
+        unrender(button.getElement());
+      }
+    });
+  }
+
 }
