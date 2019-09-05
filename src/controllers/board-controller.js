@@ -99,10 +99,8 @@ export default class BoardController {
 
   _onSortLinkClick(evt) {
     evt.preventDefault();
-    if (!evt.target.classList.contains(filterLinkClassName)) {
-      return;
-    }
-    if (evt.target.dataset.sortType === this._currentSortState) {
+    if (!evt.target.classList.contains(filterLinkClassName)
+      && evt.target.dataset.sortType === this._currentSortState) {
       return;
     }
     this._currentSortState = evt.target.dataset.sortType;

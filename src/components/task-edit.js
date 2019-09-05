@@ -1,11 +1,19 @@
-import Task from "./task";
 import {colors} from "../models/colors";
 import TagsEdit from "./tags-edit";
 import DaysEdit from "./days-edit";
+import {isTaskRepeating} from "../util/is-task-repeating";
+import Tags from "./tags";
+import BaseComponent from "./base-component";
 
-export default class TaskEdit extends Task {
-  constructor(...args) {
-    super(...args);
+export default class TaskEdit extends BaseComponent {
+  constructor({description, repeatingDays, tags, color}) {
+    super();
+    this._description = description;
+    this._repeatingDays = repeatingDays;
+    this._tags = tags;
+    this._color = color;
+    this._repeatClassName = isTaskRepeating(this._repeatingDays) ? `card--repeat` : ``;
+    this._tagListMarkup = new Tags(Array.from(this._tags)).getTemplate();
     this._tagListMarkup = new TagsEdit(Array.from(this._tags)).getTemplate();
     this._daysMarkup = new DaysEdit(Array.from(this._repeatingDays.entries())).getTemplate();
   }
