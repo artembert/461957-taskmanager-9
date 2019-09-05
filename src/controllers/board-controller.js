@@ -83,8 +83,7 @@ export default class BoardController {
 
   _renderLoadMoreButton() {
     const button = new LoadMoreButton();
-    render(button.getElement(), this._board.getElement());
-    button.getElement().addEventListener(`click`, () => {
+    const onClickLoadMore = () => {
       this._tasks
         .slice(this._renderTasksCount, this._renderTasksCount + this._tasksOnScreenCount)
         .forEach((taskData) => {
@@ -94,7 +93,10 @@ export default class BoardController {
       if (this._renderTasksCount >= tasksData.length) {
         unrender(button.getElement());
       }
-    });
+    };
+
+    render(button.getElement(), this._board.getElement());
+    button.getElement().addEventListener(`click`, onClickLoadMore);
   }
 
   _onSortLinkClick(evt) {
