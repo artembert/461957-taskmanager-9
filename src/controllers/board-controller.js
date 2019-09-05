@@ -78,6 +78,10 @@ export default class BoardController {
       .querySelector(`.card__save`)
       .addEventListener(`click`, onSaveCard);
 
+    taskEdit.getElement()
+      .querySelector(`.card__form`)
+      .addEventListener(`submit`, onSaveCard);
+
     render(task.getElement(), this._taskList.getElement());
   }
 
