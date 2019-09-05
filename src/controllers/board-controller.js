@@ -84,12 +84,12 @@ export default class BoardController {
   _renderLoadMoreButton() {
     const button = new LoadMoreButton();
     const onClickLoadMore = () => {
-      this._tasks
+      this._renderTasksCount = this._tasks
         .slice(this._renderTasksCount, this._renderTasksCount + this._tasksOnScreenCount)
-        .forEach((taskData) => {
+        .reduce((count, taskData) => {
           this._renderTask(taskData);
-          this._renderTasksCount++;
-        });
+          return count + 1;
+        }, this._renderTasksCount);
       if (this._renderTasksCount >= tasksData.length) {
         unrender(button.getElement());
       }
