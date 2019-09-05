@@ -111,26 +111,21 @@ export default class BoardController {
     }
     this._currentSortState = evt.target.dataset.sortType;
     this._taskList.getElement().innerHTML = ``;
+    const tasksToSort = this._tasks.slice();
+    let sortedTasks;
     switch (this._currentSortState) {
       case SortType.DATE_UP:
-        this._tasks
-          .slice()
-          .sort((a, b) => a.dueDate - b.dueDate)
-          .slice(0, this._renderTasksCount)
-          .forEach((taskData) => this._renderTask(taskData));
+        sortedTasks = tasksToSort.sort((a, b) => a.dueDate - b.dueDate);
         break;
       case SortType.DATE_DOWN:
-        this._tasks
-          .slice()
-          .sort((a, b) => b.dueDate - a.dueDate)
-          .slice(0, this._renderTasksCount)
-          .forEach((taskData) => this._renderTask(taskData));
+        sortedTasks = tasksToSort.sort((a, b) => b.dueDate - a.dueDate);
         break;
       default:
-        this._tasks
-          .slice(0, this._renderTasksCount)
-          .forEach((taskData) => this._renderTask(taskData));
+        sortedTasks = tasksToSort;
         break;
     }
+    sortedTasks
+      .slice(0, this._renderTasksCount)
+      .forEach((taskData) => this._renderTask(taskData));
   }
 }
