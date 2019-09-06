@@ -3,7 +3,7 @@ import {Position} from "../models/position";
 export function render(markup, container, place) {
   if (place === Position.AFTERBEGIN) {
     container.prepend(markup);
-  } if (place === Position.BEFOREEND || !place) {
+  } else if (place === Position.BEFOREEND || !place) {
     container.append(markup);
   }
 }

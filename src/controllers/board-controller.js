@@ -7,7 +7,7 @@ import TaskEdit from "../components/task-edit";
 import {getSortToggles, tasksData} from "../data";
 import Sort from "../components/sort";
 import LoadMoreButton from "../components/load-more-button";
-import {SortType} from "../models/sort-type";
+import {SortConditions} from "../models/sort-conditions";
 import {ascSort, descSort} from "../util/sort";
 
 const filterLinkClassName = `board__filter`;
@@ -22,7 +22,7 @@ export default class BoardController {
     this._taskList = new TaskList();
     this._taskListEmpty = new TaskListEmpty();
     this._renderTasksCount = tasksOnScreenCount;
-    this._currentSortState = SortType.DEFAULT;
+    this._currentSortState = SortConditions.DEFAULT;
   }
 
   init() {
@@ -115,10 +115,10 @@ export default class BoardController {
     const tasksToSort = this._tasks.slice();
     let sortedTasks;
     switch (this._currentSortState) {
-      case SortType.DATE_UP:
+      case SortConditions.DATE_UP:
         sortedTasks = tasksToSort.sort(ascSort);
         break;
-      case SortType.DATE_DOWN:
+      case SortConditions.DATE_DOWN:
         sortedTasks = tasksToSort.sort(descSort);
         break;
       default:
