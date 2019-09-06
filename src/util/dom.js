@@ -1,13 +1,10 @@
 import {Position} from "../models/position";
 
 export function render(markup, container, place) {
-  switch (place) {
-    case Position.AFTERBEGIN:
-      container.prepend(markup);
-      break;
-    default:
-      container.append(markup);
-      break;
+  if (place === Position.AFTERBEGIN) {
+    container.prepend(markup);
+  } if (place === Position.BEFOREEND || !place) {
+    container.append(markup);
   }
 }
 

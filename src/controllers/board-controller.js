@@ -8,6 +8,7 @@ import {getSortToggles, tasksData} from "../data";
 import Sort from "../components/sort";
 import LoadMoreButton from "../components/load-more-button";
 import {SortType} from "../models/sort-type";
+import {ascSort, descSort} from "../util/sort";
 
 const filterLinkClassName = `board__filter`;
 
@@ -115,10 +116,10 @@ export default class BoardController {
     let sortedTasks;
     switch (this._currentSortState) {
       case SortType.DATE_UP:
-        sortedTasks = tasksToSort.sort((a, b) => a.dueDate - b.dueDate);
+        sortedTasks = tasksToSort.sort(ascSort);
         break;
       case SortType.DATE_DOWN:
-        sortedTasks = tasksToSort.sort((a, b) => b.dueDate - a.dueDate);
+        sortedTasks = tasksToSort.sort(descSort);
         break;
       default:
         sortedTasks = tasksToSort;
