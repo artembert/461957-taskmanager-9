@@ -1,6 +1,6 @@
-import {BaseComponent} from "./base-component";
+import BaseComponent from "./base-component";
 
-export class Tags extends BaseComponent {
+export default class Tags extends BaseComponent {
   constructor(tagList) {
     super();
     this._tagList = tagList;
